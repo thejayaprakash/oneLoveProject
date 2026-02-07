@@ -2,41 +2,31 @@ import React, { useState, useRef } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { Music, Pause } from 'lucide-react';
 
-const MusicPlayer = ({ hasStarted }) => {
+const MusicPlayer = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
 
     const togglePlay = () => {
-        if (isPlaying) {
-            audioRef.current.pause();
-        } else {
-            audioRef.current.play();
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+            } else {
+                audioRef.current.play()
+                    .then(() => setIsPlaying(true))
+                    .catch(err => {
+                        console.error('Play error:', err);
+                        setIsPlaying(false);
+                    });
+            }
         }
-        setIsPlaying(!isPlaying);
     };
-
-    // Auto-play when user starts the experience
-    React.useEffect(() => {
-        if (hasStarted && audioRef.current) {
-            const attemptAutoPlay = async () => {
-                try {
-                    await audioRef.current.play();
-                    setIsPlaying(true);
-                } catch (error) {
-                    console.log("Auto-play prevented by browser. User interaction required.");
-                    setIsPlaying(false);
-                }
-            };
-
-            attemptAutoPlay();
-        }
-    }, [hasStarted]);
 
     return (
         <div className="fixed bottom-6 right-6 z-50">
-            <audio ref={audioRef} loop>
-                {/* Lo-fi / Romantic instrumental placeholder */}
-                <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112762.mp3" type="audio/mpeg" />
+            <audio ref={audioRef} loop preload="auto">
+                <source src={`${import.meta.env.BASE_URL}perfect.mp3`} type="audio/mpeg" />
+                <source src="/perfect.mp3" type="audio/mpeg" />
             </audio>
 
             <Motion.button

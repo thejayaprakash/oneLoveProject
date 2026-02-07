@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Hero from './components/Hero';
 import PhotoBook from './components/PhotoBook';
 import Proposal from './components/Proposal';
@@ -8,18 +8,10 @@ import LoveQuiz from './components/LoveQuiz';
 import MusicPlayer from './components/MusicPlayer';
 import HeartAnimation from './components/HeartAnimation';
 import ValentineQuestion from './components/ValentineQuestion';
-import StartScreen from './components/StartScreen';
 
 function App() {
-  const [hasStarted, setHasStarted] = useState(false);
-
-  const handleStart = () => {
-    setHasStarted(true);
-  };
-
   return (
     <div className="app-container">
-      {!hasStarted && <StartScreen onStart={handleStart} />}
       <HeartAnimation />
       <ValentineQuestion />
       {/* <Hero />
@@ -28,10 +20,9 @@ function App() {
       <LoveQuiz />
       <CupidBot />
       <Proposal /> */}
-      <MusicPlayer hasStarted={hasStarted} />
+      <MusicPlayer />
     </div>
   );
 }
 
 export default App;
-
