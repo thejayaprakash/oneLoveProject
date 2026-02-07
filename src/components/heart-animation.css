@@ -1,0 +1,353 @@
+/* Continuously Flowing Hearts Background */
+.heart-animation-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #1a0a1a 0%, #000000 70%);
+}
+
+/* Individual floating heart - background layer */
+.floating-heart {
+    position: absolute;
+    bottom: -100px;
+    left: var(--left);
+    width: 40px;
+    height: 40px;
+    color: rgba(255, 20, 147, 0.4);
+    opacity: var(--opacity);
+    transform: scale(var(--scale)) rotate(var(--rotation));
+    will-change: transform, opacity;
+    animation: floatUp var(--duration) linear var(--delay) infinite;
+    filter: blur(1px) drop-shadow(0 0 8px rgba(255, 20, 147, 0.3));
+}
+
+.floating-heart svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Float up animation with horizontal drift */
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) translateX(0) scale(var(--scale)) rotate(var(--rotation));
+        opacity: 0;
+    }
+
+    10% {
+        opacity: var(--opacity);
+    }
+
+    90% {
+        opacity: var(--opacity);
+    }
+
+    100% {
+        transform: translateY(calc(-100vh - 100px)) translateX(var(--drift)) scale(var(--scale)) rotate(calc(var(--rotation) + 360deg));
+        opacity: 0;
+    }
+}
+
+/* Add subtle pulsing glow effect */
+.floating-heart::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 20, 147, 0.4) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: heartGlow 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes heartGlow {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 0.8;
+    }
+}
+
+/* Corner heart containers - Top Left and Top Right */
+.corner-heart-container {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.corner-heart-container.top-left {
+    top: 80px;
+    left: 100px;
+}
+
+.corner-heart-container.top-right {
+    top: 80px;
+    right: 100px;
+}
+
+/* Corner particle - smaller size */
+.corner-particle {
+    width: var(--size);
+    height: var(--size);
+}
+
+/* Corner heart glow effect */
+.corner-heart-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+            rgba(255, 20, 147, 0.4) 0%,
+            rgba(255, 20, 147, 0.2) 30%,
+            rgba(255, 105, 180, 0.1) 50%,
+            transparent 70%);
+    animation: centralGlowPulse 5s ease-in-out infinite;
+    opacity: 0;
+    filter: blur(15px);
+}
+
+
+/* Central heart container */
+.central-heart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Particles wrapper */
+.particles-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Individual collecting particle */
+.collecting-particle {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle, #FF69B4 0%, #FF1493 50%, #C71585 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px #FF69B4,
+        0 0 20px #FF1493,
+        0 0 30px rgba(255, 20, 147, 0.5);
+    will-change: transform, opacity;
+
+    /* Start at scattered position */
+    left: 50%;
+    top: 50%;
+    margin-left: calc(var(--start-x) / 2);
+    margin-top: calc(var(--start-y) / 2);
+
+    animation: collectToHeart 5s ease-in-out var(--delay) infinite;
+}
+
+/* Particle collection animation */
+@keyframes collectToHeart {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    40% {
+        transform: translate(calc((var(--final-x) - var(--start-x)) / 2),
+                calc((var(--final-y) - var(--start-y)) / 2)) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(calc((var(--final-x) - var(--start-x)) / 2),
+                calc((var(--final-y) - var(--start-y)) / 2)) scale(1.2);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translate(calc((var(--final-x) - var(--start-x)) / 2),
+                calc((var(--final-y) - var(--start-y)) / 2)) scale(1);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Central heart glow effect */
+.central-heart-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+            rgba(255, 20, 147, 0.6) 0%,
+            rgba(255, 20, 147, 0.3) 30%,
+            rgba(255, 105, 180, 0.2) 50%,
+            transparent 70%);
+    animation: centralGlowPulse 5s ease-in-out infinite;
+    opacity: 0;
+    filter: blur(20px);
+}
+
+@keyframes centralGlowPulse {
+
+    0%,
+    20%,
+    80%,
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    40%,
+    60% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+/* Add sparkle effect to particles when they form the heart */
+.collecting-particle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: sparkle 5s ease-in-out var(--delay) infinite;
+}
+
+@keyframes sparkle {
+
+    0%,
+    35%,
+    65%,
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    45%,
+    55% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .floating-heart {
+        width: 30px;
+        height: 30px;
+    }
+
+    .central-heart-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .central-heart-glow {
+        width: 200px;
+        height: 200px;
+    }
+
+    .corner-heart-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .corner-heart-container.top-left {
+        top: 60px;
+        left: 50px;
+    }
+
+    .corner-heart-container.top-right {
+        top: 60px;
+        right: 50px;
+    }
+
+    .corner-heart-glow {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-heart {
+        width: 25px;
+        height: 25px;
+    }
+
+    .central-heart-container {
+        width: 250px;
+        height: 250px;
+    }
+
+    .central-heart-glow {
+        width: 150px;
+        height: 150px;
+    }
+
+    .corner-heart-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .corner-heart-container.top-left {
+        top: 40px;
+        left: 20px;
+    }
+
+    .corner-heart-container.top-right {
+        top: 40px;
+        right: 20px;
+    }
+
+    .corner-heart-glow {
+        width: 100px;
+        height: 100px;
+    }
+}

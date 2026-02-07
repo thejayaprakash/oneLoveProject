@@ -1,0 +1,187 @@
+/* Memories Page Styles */
+.memories-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow-y: auto;
+    z-index: 10;
+    padding: 40px 20px;
+}
+
+.memories-content {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.memories-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ff69b4;
+    margin-bottom: 50px;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4);
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 105, 180, 0.6);
+    }
+}
+
+.memories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 50px;
+    margin-bottom: 50px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.memory-card {
+    background: rgba(20, 10, 20, 0.8);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5);
+    border: 2px solid rgba(255, 105, 180, 0.4);
+    backdrop-filter: blur(15px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: cardFadeIn 0.6s ease-out;
+}
+
+.memory-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(255, 105, 180, 0.7);
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.memory-image-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+.memory-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.memory-card:hover .memory-image {
+    transform: scale(1.05);
+}
+
+.memory-caption {
+    font-size: 1.3rem;
+    color: #ffb3d9;
+    font-weight: 600;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+    line-height: 1.6;
+}
+
+.continue-button {
+    background: linear-gradient(135deg, #ff1744 0%, #f50057 100%);
+    color: white;
+    border: none;
+    padding: 18px 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.continue-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 23, 68, 0.6);
+    background: linear-gradient(135deg, #f50057 0%, #ff1744 100%);
+}
+
+.continue-button:active {
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .memories-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .memories-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .memory-image-container {
+        height: 300px;
+    }
+
+    .memory-caption {
+        font-size: 1.1rem;
+    }
+
+    .continue-button {
+        padding: 15px 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .memories-container {
+        padding: 20px 15px;
+    }
+
+    .memories-title {
+        font-size: 1.5rem;
+    }
+
+    .memory-card {
+        padding: 20px;
+    }
+
+    .memory-image-container {
+        height: 250px;
+    }
+
+    .memory-caption {
+        font-size: 1rem;
+    }
+}

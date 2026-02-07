@@ -1,0 +1,289 @@
+/* Realistic Book Styles - Append to index.css */
+
+/* Realistic Book with Center Spine */
+.book-wrapper {
+    perspective: 2500px;
+    margin-top: 2rem;
+}
+
+.book-cover-locked {
+    width: 420px;
+    height: 520px;
+    background: linear-gradient(135deg, #FF69B4 0%, #FF1493 50%, #FF69B4 100%);
+    border: 3px solid white;
+    border-radius: 12px;
+    box-shadow:
+        inset 8px 0 20px rgba(255, 255, 255, 0.3),
+        15px 25px 60px rgba(255, 20, 147, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.book-cover-locked::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.realistic-book {
+    display: flex;
+    width: 800px;
+    height: 520px;
+    position: relative;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 20px 40px rgba(255, 105, 180, 0.3));
+}
+
+.book-page {
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to bottom, #FFFAF0 0%, #FFF8F0 100%);
+    position: relative;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.left-page {
+    border-radius: 12px 0 0 12px;
+    box-shadow:
+        inset -15px 0 30px rgba(255, 105, 180, 0.05),
+        -5px 0 15px rgba(0, 0, 0, 0.1);
+    border-right: none;
+}
+
+.left-page.cover-page {
+    background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
+}
+
+.right-page {
+    border-radius: 0 12px 12px 0;
+    box-shadow:
+        inset 15px 0 30px rgba(255, 105, 180, 0.05),
+        5px 0 15px rgba(0, 0, 0, 0.1);
+    border-left: none;
+}
+
+.right-page:hover {
+    background: linear-gradient(to bottom, #FFFCF5 0%, #FFFAF0 100%);
+}
+
+.book-spine {
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(255, 105, 180, 0.3) 0%,
+            rgba(255, 105, 180, 0.5) 50%,
+            rgba(255, 105, 180, 0.3) 100%);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    box-shadow:
+        0 0 10px rgba(255, 105, 180, 0.4),
+        inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.page-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.photo-frame-book {
+    width: 100%;
+    max-width: 280px;
+    height: 320px;
+    background: white;
+    padding: 12px;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(255, 105, 180, 0.2);
+    transform: rotate(-1deg);
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.photo-frame-book:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.photo-frame-book::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    background: rgba(255, 182, 193, 0.3);
+    border-radius: 0 0 10px 10px;
+}
+
+.photo-frame-book img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.caption-book {
+    font-size: 1.6rem;
+    color: #FF1493;
+    text-align: center;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 2px 4px rgba(255, 105, 180, 0.2);
+    font-weight: 600;
+}
+
+.love-code-book {
+    font-size: 0.9rem;
+    color: #FF69B4;
+    text-align: center;
+    font-style: italic;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.1), rgba(255, 182, 193, 0.15));
+    border-radius: 20px;
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.page-number-book {
+    position: absolute;
+    bottom: 1.5rem;
+    font-size: 1rem;
+    color: #FFB6C1;
+    font-family: var(--font-script);
+}
+
+.left-page .page-number-book {
+    left: 2rem;
+}
+
+.right-page .page-number-book {
+    right: 2rem;
+}
+
+.book-controls {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-indicator {
+    font-size: 1rem;
+    color: #FF69B4;
+    font-weight: 600;
+}
+
+.restart-btn {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+    color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+}
+
+/* Flipping Page Animation */
+.flipping-page {
+    position: absolute;
+    right: 50%;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform-origin: right center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.flip-page-front,
+.flip-page-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(to bottom, #FFFAF0 0%, #FFF8F0 100%);
+    border-radius: 0 12px 12px 0;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.flip-page-back {
+    transform: rotateY(180deg);
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+    border: 2px solid white;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    font-size: 1rem;
+}
+
+.nav-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+    background: linear-gradient(135deg, #FF1493, #FF69B4);
+}
+
+.nav-btn:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .realistic-book {
+        width: 90vw;
+        max-width: 700px;
+        height: auto;
+        aspect-ratio: 16/10;
+    }
+
+    .photo-frame-book {
+        height: 250px;
+    }
+}
