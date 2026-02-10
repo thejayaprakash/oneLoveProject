@@ -39,12 +39,10 @@ const ValentineQuestion = () => {
         "Nah"
     ], []);
 
-    // Track cursor position and move button if cursor gets too close
+    // Track cursor position and move button in a circle around Yes button
     const handleMouseMove = React.useCallback((e) => {
         const button = noButtonRef.current;
         if (!button || showCelebration) return;
-
-
 
         const buttonRect = button.getBoundingClientRect();
         const buttonCenterX = buttonRect.left + buttonRect.width / 2;
@@ -63,32 +61,42 @@ const ValentineQuestion = () => {
         const proximityThreshold = 100;
 
         if (distance < proximityThreshold) {
-            // Cursor is too close! Move button slightly away
-            // Calculate direction away from cursor
-            const angle = Math.atan2(buttonCenterY - mouseY, buttonCenterX - mouseX);
+            // Find the Yes button to use as the center of the circle
+            const yesButton = document.querySelector('.yes-button');
+            if (!yesButton) return;
 
-            // Move button SLIGHTLY in opposite direction (very small distance)
-            const moveDistance = 30; // Very small movement
-            let newX = buttonRect.left + Math.cos(angle) * moveDistance;
-            let newY = buttonRect.top + Math.sin(angle) * moveDistance;
+            const yesRect = yesButton.getBoundingClientRect();
+            const yesCenterX = yesRect.left + yesRect.width / 2;
+            const yesCenterY = yesRect.top + yesRect.height / 2;
 
-            // Keep button within safe bounds - ensure it's always visible
+            // Radius of the circle around Yes button
+            const circleRadius = 150;
+
+            // Calculate angle based on hover count to move to different positions
+            const newCount = noHoverCount + 1;
+            const angleStep = (Math.PI * 2) / 8; // Divide circle into 8 positions
+            const angle = angleStep * newCount;
+
+            // Calculate new position on the circle
+            const newX = yesCenterX + Math.cos(angle) * circleRadius - buttonRect.width / 2;
+            const newY = yesCenterY + Math.sin(angle) * circleRadius - buttonRect.height / 2;
+
+            // Keep button within safe bounds
             const padding = 50;
             const minX = padding;
             const maxX = window.innerWidth - buttonRect.width - padding;
             const minY = padding;
             const maxY = window.innerHeight - buttonRect.height - padding;
 
-            newX = Math.max(minX, Math.min(maxX, newX));
-            newY = Math.max(minY, Math.min(maxY, newY));
+            const boundedX = Math.max(minX, Math.min(maxX, newX));
+            const boundedY = Math.max(minY, Math.min(maxY, newY));
 
-            setNoButtonPosition({ x: newX, y: newY });
+            setNoButtonPosition({ x: boundedX, y: boundedY });
 
             // Update messages
-            const newCount = noHoverCount + 1;
             setNoHoverCount(newCount);
             setWarningText(funnyMessages[Math.min(newCount, funnyMessages.length - 1)]);
-            setNoButtonText(noButtonTexts[Math.min(newCount, noButtonTexts.length - 1)])
+            setNoButtonText(noButtonTexts[Math.min(newCount, noButtonTexts.length - 1)]);
         } else if (distance < proximityThreshold * 2) {
             // Cursor is getting close - change text as warning
             if (noHoverCount === 0) {
@@ -167,10 +175,10 @@ const ValentineQuestion = () => {
         <div className="valentine-question-container">
             <div className="question-card">
                 <h1 className="question-title">
-                    Will you be my Valentine? 💕💖
+                    Subathra,Will you be my Valentine? 💕💖
                 </h1>
                 <p className="question-subtitle">{warningText}</p>
-                <p className="birthday-message">A little early… but my heart couldn't wait. Happy Birthday 🎂💖</p>
+                <p className="birthday-message">A little early… but my heart couldn't wait. <span className="pink-highlight">Happy Birthday</span> 🎂💖</p>
 
                 <div className="buttons-container">
                     <button
