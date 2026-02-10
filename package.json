@@ -2,13 +2,14 @@
   "name": "onelove",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://thejayaprakash.github.io/oneLoveProject/",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && vite build && gh-pages -d dist"
   },
   "dependencies": {
     "framer-motion": "^12.33.0",
