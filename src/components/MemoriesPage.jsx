@@ -15,6 +15,13 @@ const MemoriesPage = () => {
                                 src="/media__1770450493760.jpg"
                                 alt="Footprints in sand"
                                 className="memory-image"
+                                onError={(e) => {
+                                    console.error('Failed to load image:', e.target.src);
+                                    e.target.style.border = '2px solid red';
+                                }}
+                                onLoad={(e) => {
+                                    console.log('Image loaded successfully:', e.target.src);
+                                }}
                             />
                         </div>
                         <p className="memory-caption">Walking together, always 💫</p>
@@ -27,6 +34,13 @@ const MemoriesPage = () => {
                                 src="/media__1770450493602.jpg"
                                 alt="Names in sand"
                                 className="memory-image"
+                                onError={(e) => {
+                                    console.error('Failed to load image:', e.target.src);
+                                    e.target.style.border = '2px solid red';
+                                }}
+                                onLoad={(e) => {
+                                    console.log('Image loaded successfully:', e.target.src);
+                                }}
                             />
                         </div>
                         <p className="memory-caption">Written once, felt forever 💖</p>

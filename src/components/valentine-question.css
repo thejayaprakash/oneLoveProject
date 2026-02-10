@@ -67,6 +67,11 @@
     font-weight: 500;
 }
 
+.pink-highlight {
+    color: #ff69b4;
+    font-weight: 700;
+}
+
 
 /* Buttons Container */
 .buttons-container {

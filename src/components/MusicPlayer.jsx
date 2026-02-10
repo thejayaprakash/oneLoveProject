@@ -1,37 +1,58 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { Music, Pause } from 'lucide-react';
+import perfectMusic from '../assets/perfect.mp3';
 
 const MusicPlayer = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
 
-    const togglePlay = () => {
+    useEffect(() => {
+        // Attempt to auto-play when component mounts (will likely be blocked by browser but worth a try)
+        // We set volume to 0.4 to be less intrusive
         if (audioRef.current) {
+            audioRef.current.volume = 0.4;
+        }
+    }, []);
+
+    const togglePlay = async () => {
+        if (!audioRef.current) return;
+
+        try {
             if (isPlaying) {
                 audioRef.current.pause();
                 setIsPlaying(false);
             } else {
-                audioRef.current.play()
-                    .then(() => setIsPlaying(true))
-                    .catch(err => {
-                        console.error('Play error:', err);
-                        setIsPlaying(false);
-                    });
+                // This promise handling is crucial for debugging playback issues
+                await audioRef.current.play();
+                setIsPlaying(true);
             }
+        } catch (error) {
+            console.error("Playback failed:", error);
+            // If autoplay fails or other errors, ensure state reflects paused
+            setIsPlaying(false);
         }
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50">
-            <audio ref={audioRef} loop preload="auto">
-                <source src={`${import.meta.env.BASE_URL}perfect.mp3`} type="audio/mpeg" />
-                <source src="/perfect.mp3" type="audio/mpeg" />
-            </audio>
+        <div className="fixed bottom-6 right-6 z-[9999]">
+            {/* Using the HTML5 audio tag is more reliable in React than new Audio() */}
+            <audio
+                ref={audioRef}
+                src={perfectMusic}
+                loop
+                preload="auto"
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onError={(e) => console.error("Audio error:", e)}
+            />
 
             <Motion.button
-                onClick={togglePlay}
-                className="w-14 h-14 rounded-full bg-pink-500 text-white flex items-center justify-center shadow-lg border-2 border-white/20"
+                onClick={(e) => {
+                    console.log("Music button clicked!");
+                    togglePlay();
+                }}
+                className="w-14 h-14 rounded-full bg-pink-500 text-white flex items-center justify-center shadow-lg border-2 border-white/20 cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 animate={{ rotate: isPlaying ? 360 : 0 }}
